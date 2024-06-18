@@ -1,34 +1,21 @@
-name: CI/CD
+name: Project Change
 
-on:
-  push:
-    branches:
-      - develop
-      - main
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Load environment variables
-      run: |
-        if [ ${{ github.ref }} == 'refs/heads/main' ]; then
-          cp .env.development .env
-        elif [ ${{ github.ref }} == 'refs/heads/PROD' ]; then
-          cp .env.production .env
-        fi
-
-    - name: Build project
-      run: npm run build
+     
+      - uses: actions/checkout@main
+     
+      - name: Find and Replace
+        uses: thiagodnf/string-replacer@v1.0.2
+        with:
+          find: "KUIPER_DEV/"
+          replace: "KUIPER/"
+          include: |
+            **
+          exclude: |
+            .git/**
+            node_modules/**
