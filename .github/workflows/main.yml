@@ -1,16 +1,27 @@
-name: Replace string in file
-
-on:
-  push:
-    branches:
-      - PROD
+on: [push]
 
 jobs:
-  publish:
+  find-and-replace-job:
     runs-on: ubuntu-latest
+    name: 'Find and replace on a string'
     steps:
-      - uses: actions/checkout@v3
-      - uses: flcdrg/replace-multiple-action@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run find-and-replace to remove refs/heads/
+        uses: mad9000/actions-find-and-replace-string@1
+        id: findandreplace
         with:
-          files: '**'
-          find: '[{ "find": "KUIPER_DEV", "replace": "KUIPER" }]'
+          source: ${{ github.ref }}
+          find: 'KUIPER_DEV/'
+          replace: 'KUIPER/'
+      - name: Get the above output
+        run: echo "The replaced value is ${{ steps.findandreplace.outputs.value }}"
+      - name: Run find-and-replace to remove slashes
+        uses: mad9000/actions-find-and-replace-string@1
+        id: findandreplace2
+        with:
+          source: ${{ steps.findandreplace.outputs.value }}
+          find: '/'
+          replace: '-'
+      - name: Get the final output
+        run: echo "The replaced value is ${{ steps.findandreplace2.outputs.value }}"
