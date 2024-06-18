@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - PROD
+      - develop
       - main
 
 jobs:
@@ -19,6 +19,9 @@ jobs:
       with:
         node-version: '14'
 
+    - name: Install dependencies
+      run: npm install
+
     - name: Load environment variables
       run: |
         if [ ${{ github.ref }} == 'refs/heads/main' ]; then
@@ -27,8 +30,5 @@ jobs:
           cp .env.production .env
         fi
 
-    - name: Install dependencies
-      run: npm install
-  
     - name: Build project
-      run: npm run build        
+      run: npm run build
