@@ -14,6 +14,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
     - name: Load environment variables
       run: |
         if [ ${{ github.ref }} == 'refs/heads/main' ]; then
@@ -22,3 +27,8 @@ jobs:
           cp .env.production .env
         fi
 
+    - name: Install dependencies
+      run: npm install
+  
+    - name: Build project
+      run: npm run build        
