@@ -1,12 +1,13 @@
-on: [push]
-
+name: My Workflow
+on: [push, pull_request]
 jobs:
-  find-and-replace-job:
+  build:
     runs-on: ubuntu-latest
-    name: 'Find and replace on a string'
     steps:
-      - uses: actions/checkout@v3
-      - uses: flcdrg/replace-multiple-action@v1
+      - uses: actions/checkout@v2
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v3
         with:
-          files: '**'
-          find: '[{ "find": "KUIPER_DEV/", "replace": "KUIPER/" }]'
+          find: "KUIPER_DEV/"
+          replace: "KUIPER/"
+          regex: false
