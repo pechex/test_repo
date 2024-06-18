@@ -1,0 +1,24 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - PROD
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Load environment variables
+      run: |
+        if [ ${{ github.ref }} == 'refs/heads/main' ]; then
+          cp .env.development .env
+        elif [ ${{ github.ref }} == 'refs/heads/PROD' ]; then
+          cp .env.production .env
+        fi
+
