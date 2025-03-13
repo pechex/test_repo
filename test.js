@@ -3,4 +3,6 @@ function someFunction() {
 
     nVar++;
     nVar--;
+
+    nVar = nVar + 1;
 }
