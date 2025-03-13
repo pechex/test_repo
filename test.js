@@ -5,4 +5,6 @@ function someFunction() {
     nVar--;
 
     nVar = nVar + 1;
+    //Comment
+    nVar = nVar - 1;
 }
