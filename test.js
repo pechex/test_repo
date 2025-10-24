@@ -5,6 +5,10 @@ function someFunction() {
     nVar--;
 
 if(nVar == 0) {
-        console.log(    "Hello World!");
+console.log(    "Hello World!");
+} else 
+    
+    {
+console.log("Goodbye World!");
 }
 }
