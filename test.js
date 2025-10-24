@@ -3,4 +3,8 @@ function someFunction() {
 
     nVar++;
     nVar--;
+
+if(nVar == 0) {
+        console.log(    "Hello World!");
+}
 }
